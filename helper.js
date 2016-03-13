@@ -9,7 +9,7 @@ AWS.config.basePath = __dirname + '/buckets';
 const s3 = AWS.S3({ params: { Bucket: 'example' } });
 
 const surprise = (name) => {
-  if (_.random(0, 50) <= 50) {
+  if (_.random(0, 50) % 2) {
     return new Error(`w00t!!! ${name} error`);
   }
 };
@@ -19,10 +19,19 @@ exports.sendSms = (data, callback) => {
 
   setTimeout(() => {
     debug(`sending out sms: ${JSON.stringify(data)}`);
-    callback(surprise('sending-sms'), {
+    let response = {
       status: 200,
       message: 'OK',
-    });
+    };
+    const error = surprise('sending-sms');
+    if (error) {
+      response = {
+        status: 500,
+        message: 'SMS Failed',
+      };
+    }
+
+    callback(error, response);
   }, 200);
 };
 

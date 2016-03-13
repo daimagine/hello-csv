@@ -25,16 +25,17 @@ const naive = () => {
           helper.sendSms(line, (err, sendingStatus) => {
             if (err) {
               debug(err.message);
-
-              helper.logToS3({
-                sendingStatus,
-                line,
-              }, (err, loggingStatus) => {
-                if (err) {
-                  debug(err.message);
-                }
-              });
             }
+
+            // send sms sending status to S3
+            helper.logToS3({
+              sendingStatus,
+              line,
+            }, (err, loggingStatus) => {
+              if (err) {
+                debug(err.message);
+              }
+            });
           });
         }
       });
