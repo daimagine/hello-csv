@@ -12,6 +12,7 @@ const sendSmsAndLogToS3 = (line, callback) => {
     if (err) {
       debug(err.message);
     }
+
     // never stop the forEachOf
     callback(null, result);
   });

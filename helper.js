@@ -62,6 +62,7 @@ const sendSmsAndLogToS3 = (rawLine, callback) => {
     if (err) {
       debug(err.message);
     }
+
     // send sms sending status to S3
     const payload = {
       sendingStatus,
@@ -77,5 +78,5 @@ module.exports = {
   sendSms,
   logToS3,
   transformLine,
-  sendSmsAndLogToS3
-}
+  sendSmsAndLogToS3,
+};

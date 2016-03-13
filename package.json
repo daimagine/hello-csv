@@ -6,6 +6,7 @@
   "scripts": {
     "parse:async": "better-npm-run parse:async",
     "parse:callback": "better-npm-run parse:callback",
+    "parse:promise": "better-npm-run parse:promise",
     "lint": "better-npm-run lint",
     "lint:fix": "better-npm-run lint:fix",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +22,12 @@
       "command": "node parse-callback",
       "env": {
         "DEBUG": "hello-helper,parse:callback"
+      }
+    },
+    "parse:promise": {
+      "command": "node parse-promise",
+      "env": {
+        "DEBUG": "hello-helper,parse:promise"
       }
     },
     "lint": {
