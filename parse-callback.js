@@ -16,26 +16,14 @@ const naive = () => {
         return;
       }
 
-      parsed.map((rawLine, index) => {
+      parsed.map((line, index) => {
         // transform line to get fullname
-        const line = helper.transformLine(rawLine);
         if (index > 0) {
           debug(`sending data index: ${index}`);
-
-          helper.sendSms(line, (err, sendingStatus) => {
+          helper.sendSmsAndLogToS3(line, (err, loggingStatus) => {
             if (err) {
               debug(err.message);
             }
-
-            // send sms sending status to S3
-            helper.logToS3({
-              sendingStatus,
-              line,
-            }, (err, loggingStatus) => {
-              if (err) {
-                debug(err.message);
-              }
-            });
           });
         }
       });

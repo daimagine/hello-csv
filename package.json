@@ -4,16 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "parse:async": "better-npm-run parse:async",
     "parse:callback": "better-npm-run parse:callback",
     "lint": "better-npm-run lint",
     "lint:fix": "better-npm-run lint:fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "betterScripts": {
+    "parse:async": {
+      "command": "node parse-async",
+      "env": {
+        "DEBUG": "hello-helper,parse:async"
+      }
+    },
     "parse:callback": {
       "command": "node parse-callback",
       "env": {
-        "DEBUG": "parse:callback"
+        "DEBUG": "hello-helper,parse:callback"
       }
     },
     "lint": {

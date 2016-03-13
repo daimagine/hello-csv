@@ -15,7 +15,7 @@ const surprise = (name) => {
 };
 
 // simulates sending sms
-exports.sendSms = (data, callback) => {
+const sendSms = (data, callback) => {
 
   setTimeout(() => {
     debug(`sending out sms: ${JSON.stringify(data)}`);
@@ -36,7 +36,7 @@ exports.sendSms = (data, callback) => {
 };
 
 // simulates logging to s3
-exports.logToS3 = (data, callback) => {
+const logToS3 = (data, callback) => {
 
   setTimeout(() => {
     debug(`putting data to S3: ${JSON.stringify(data)}`);
@@ -50,7 +50,32 @@ exports.logToS3 = (data, callback) => {
 };
 
 // line transformation. for now just merge first and last into fullname
-exports.transformLine = (line) => _.union(
+const transformLine = (line) => _.union(
   [`${line[0]} ${line[1]}`],
   _.rest(line, 2)
 );
+
+// send sms and log to S3
+const sendSmsAndLogToS3 = (rawLine, callback) => {
+  const line = transformLine(rawLine);
+  sendSms(line, (err, sendingStatus) => {
+    if (err) {
+      debug(err.message);
+    }
+    // send sms sending status to S3
+    const payload = {
+      sendingStatus,
+      line,
+    };
+    logToS3(payload, (err, loggingStatus) => {
+      callback(err, payload);
+    });
+  });
+};
+
+module.exports = {
+  sendSms,
+  logToS3,
+  transformLine,
+  sendSmsAndLogToS3
+}
