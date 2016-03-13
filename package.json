@@ -4,7 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "parse:callback": "better-npm-run parse:callback",
+    "lint": "better-npm-run lint",
+    "lint:fix": "better-npm-run lint:fix",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "betterScripts": {
+    "parse:callback": {
+      "command": "node parse-callback",
+      "env": {
+        "DEBUG": "parse:callback"
+      }
+    },
+    "lint": {
+      "command": "jscs ."
+    },
+    "lint:fix": {
+      "command": "jscs --fix ."
+    }
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +30,10 @@
     "bluebird": "^3.2.2",
     "csv-parse": "^1.0.1",
     "debug": "^2.2.0",
-    "mock-aws-s3": "^2.1.0"
+    "mock-aws-s3": "^2.1.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "better-npm-run": "0.0.8"
   }
 }

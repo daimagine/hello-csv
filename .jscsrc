@@ -1,4 +1,12 @@
 {
     "preset": "airbnb",
-    "validateIndentation": 4
+    "validateIndentation": 4,
+    "esnext": true,
+    "fileExtensions": [".js"],
+    "excludeFiles": [
+      "*.log",
+      "*.json",
+      "*.csv",
+      "*.md"
+    ]
 }
