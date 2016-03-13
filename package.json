@@ -7,6 +7,7 @@
     "parse:async": "better-npm-run parse:async",
     "parse:callback": "better-npm-run parse:callback",
     "parse:promise": "better-npm-run parse:promise",
+    "parse:stream": "better-npm-run parse:stream",
     "lint": "better-npm-run lint",
     "lint:fix": "better-npm-run lint:fix",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,6 +29,12 @@
       "command": "node parse-promise",
       "env": {
         "DEBUG": "hello-helper,parse:promise"
+      }
+    },
+    "parse:stream": {
+      "command": "node parse-stream",
+      "env": {
+        "DEBUG": "hello-helper,parse:stream"
       }
     },
     "lint": {
