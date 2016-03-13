@@ -12,7 +12,8 @@ The backlog is as folows:
 
 - What do you think about the [`naive()`](https://github.com/HOOQsters/hello-csv/blob/master/parse-callback.js#L11) function?
 IMHO, I think we could simplify a few things here.
-for example, handle csv read error,
+for example, reduce code repetition,
+handle csv read error,
 using es6 array map feature for looping thru the parsed line,
 removing unnecessary function argument name since its function is obviously clear,
 and using a queue system for sending sms.
