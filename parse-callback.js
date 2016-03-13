@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('hello');
+const debug = require('debug')('parse:callback');
 
 const fs = require('fs');
 const parse = require('csv-parse');
@@ -8,46 +8,38 @@ const helper = require('./helper');
 
 // 0. Naïve
 
-function naive() {
-    fs.readFile(__dirname + '/sample.csv', function thenParse(err, loadedCsv) {
+const naive = () => {
+  fs.readFile(__dirname + '/sample.csv', (err, loadedCsv) => {
+    parse(loadedCsv, (err, parsed) => {
+      if (err) {
+        debug('failed to parse the csv');
+        return;
+      }
 
-        parse(loadedCsv, function transformEachLine(err, parsed) {
+      parsed.map((rawLine, index) => {
+        // transform line to get fullname
+        const line = helper.transformLine(rawLine);
+        if (index > 0) {
+          debug(`sending data index: ${index}`);
 
-            for (let index in parsed) {
+          helper.sendSms(line, (err, sendingStatus) => {
+            if (err) {
+              debug(err.message);
 
-                let line = parsed[index];
-
-                // FIXME: Put your transformation here
-
-                if (index > 0) {
-                    debug(`sending data index: ${index - 1}`);
-
-                    helper.sendSms(line, function afterSending(err, sendingStatus) {
-                        let lineToLog;
-                        if (err) {
-                            debug(err.message);
-
-                            lineToLog = {
-                                sendingStatus,
-                                line,
-                            };
-                        }
-
-                        if (lineToLog) {
-                            helper.logToS3(lineToLog, function afterLogging(err, loggingStatus) {
-                                if (err) {
-                                    debug(err.message);
-                                }
-                            });
-                        }
-                    });
+              helper.logToS3({
+                sendingStatus,
+                line,
+              }, (err, loggingStatus) => {
+                if (err) {
+                  debug(err.message);
                 }
-
-                index++;
+              });
             }
-        });
+          });
+        }
+      });
     });
-}
+  });
+};
 
 naive();
-
